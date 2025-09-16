@@ -1,37 +1,43 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 // Utility functions for the restaurant system
 export function generateQRCodeData(userId: string, baseUrl = ""): string {
-  return `${baseUrl}/check-in/${userId}`
+  return `${baseUrl}/check-in/${userId}`;
 }
 
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-  }).format(amount)
+  }).format(amount);
 }
 
-export function formatDate(date: Date): string {
+export function formatDate(date: Date | string): string {
+  const d = typeof date === "string" ? new Date(date) : date;
+
   return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
-  }).format(date)
+  }).format(d);
 }
 
-export function isToday(date: Date): boolean {
-  const today = new Date()
+export function isToday(date: Date | string): boolean {
+  if (!date) return false;
+
+  const d = typeof date === "string" ? new Date(date) : date;
+  const today = new Date();
+
   return (
-    date?.getDate() === today.getDate() &&
-    date?.getMonth() === today.getMonth() &&
-    date?.getFullYear() === today.getFullYear()
-  )
+    d.getDate() === today.getDate() &&
+    d.getMonth() === today.getMonth() &&
+    d.getFullYear() === today.getFullYear()
+  );
 }

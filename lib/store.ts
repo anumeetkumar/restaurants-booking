@@ -105,7 +105,7 @@ export const useSettingsStore = create<SettingsStore>()(
   persist(
     (set) => ({
       settings: {
-        name: "Royal Buffet Restaurant",
+        name: "Akairis",
         contactInfo: "+1 (555) 123-4567",
         theme: "light",
       },

@@ -1,19 +1,20 @@
 "use client";
 
-import React from "react"
+import React from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import Input from "@/components/ui/input";
+import Textarea from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useCategoryStore } from "@/lib/store";
 import type { BuffetCategory } from "@/lib/types";
 
 const categorySchema = z.object({
- name: z.string()
+  name: z
+    .string()
     .trim()
     .min(1, "Name is required")
     .max(50, "Name must be less than 50 characters"),
@@ -26,9 +27,9 @@ const categorySchema = z.object({
 
   pricePerPlate: z.coerce
     .number()
-    .refine((val) => !isNaN(val), { message: "Price is required" })
-    // .min(0.01, "Price must be greater than 0")
-    // .max(999.99, "Price must be less than $1000"),
+    .refine((val) => !isNaN(val), { message: "Price is required" }),
+  // .min(0.01, "Price must be greater than 0")
+  // .max(999.99, "Price must be less than $1000"),
 });
 
 type CategoryFormData = z.infer<typeof categorySchema>;

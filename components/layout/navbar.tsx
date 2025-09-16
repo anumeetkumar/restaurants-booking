@@ -13,8 +13,8 @@ const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
   { name: "Categories", href: "/categories", icon: UtensilsCrossed },
   { name: "Users", href: "/users", icon: Users },
-  { name: "QR Codes", href: "/qr-codes", icon: QrCode },
-  { name: "Settings", href: "/settings", icon: Settings },
+  // { name: "QR Codes", href: "/qr-codes", icon: QrCode },
+  // { name: "Settings", href: "/settings", icon: Settings },
 ]
 
 export function Navbar() {
@@ -56,7 +56,7 @@ export function Navbar() {
           </div>
 
           <div className="flex items-center space-x-2">
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             <Button asChild variant="default" className="bg-red-700 hover:bg-red-800 hidden sm:flex">
               <Link href="/check-in">New Check-In</Link>
             </Button>

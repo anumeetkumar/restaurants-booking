@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { AnalyticsCards } from "@/components/dashboard/analytics-cards"
 import { RevenueChart } from "@/components/dashboard/revenue-chart"
 import { CategoryPerformance } from "@/components/dashboard/category-performance"
@@ -14,6 +15,18 @@ export default function Dashboard() {
   const { categories } = useCategoryStore()
   const { users } = useUserStore()
 
+  const [windowWidth, setWindowWidth] = useState<number | null>(null)
+
+  useEffect(() => {
+    // Set initial width
+    setWindowWidth(window.innerWidth)
+
+    // Update on resize
+    const handleResize = () => setWindowWidth(window.innerWidth)
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
+
   const bookingsByCategory = categories.map((category) => ({
     name: category.name,
     bookings: users.filter((user) => user.categoryId === category.id).length,
@@ -22,11 +35,13 @@ export default function Dashboard() {
       .reduce((sum, user) => sum + user.noOfPersons * category.pricePerPlate, 0),
   }))
 
-  // Check-in status data for pie chart
   const checkinData = [
     { name: "Checked In", value: users.filter((u) => u.checkedIn).length },
     { name: "Pending", value: users.filter((u) => !u.checkedIn).length },
   ]
+
+  // Fallback if width not yet available (SSR render)
+  const isSmallScreen = windowWidth !== null && windowWidth < 640
 
   return (
     <div className="container mx-auto p-4 sm:p-6 space-y-6">
@@ -59,9 +74,9 @@ export default function Dashboard() {
                     cy="50%"
                     labelLine={false}
                     label={({ name, value, percent }) =>
-                      window.innerWidth > 640 ? `${name}: ${value} (${(percent * 100).toFixed(0)}%)` : `${value}`
+                      isSmallScreen ? `${value}` : `${name}: ${value} (${(percent * 100).toFixed(0)}%)`
                     }
-                    outerRadius={window.innerWidth > 640 ? 80 : 60}
+                    outerRadius={isSmallScreen ? 60 : 80}
                     fill="#8884d8"
                     dataKey="value"
                   >
@@ -97,9 +112,9 @@ export default function Dashboard() {
                   dataKey="name"
                   tick={{ fontSize: 12 }}
                   interval={0}
-                  angle={window.innerWidth < 640 ? -45 : 0}
-                  textAnchor={window.innerWidth < 640 ? "end" : "middle"}
-                  height={window.innerWidth < 640 ? 80 : 60}
+                  angle={isSmallScreen ? -45 : 0}
+                  textAnchor={isSmallScreen ? "end" : "middle"}
+                  height={isSmallScreen ? 80 : 60}
                 />
                 <YAxis tick={{ fontSize: 12 }} />
                 <Tooltip />

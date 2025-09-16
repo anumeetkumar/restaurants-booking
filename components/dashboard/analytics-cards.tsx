@@ -111,7 +111,7 @@ export function AnalyticsCards() {
       </div>
 
       {/* Popular Category Highlight */}
-      {mostPopularCategory && (
+      {false && (
         <Card className="border-red-200 bg-red-50/50">
           <CardHeader>
             <CardTitle className="text-lg flex items-center">

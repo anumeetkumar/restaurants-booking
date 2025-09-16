@@ -57,10 +57,10 @@ export default function Dashboard() {
 
       {/* Charts Row */}
       <div className="grid gap-6 lg:grid-cols-2">
-        <RevenueChart />
+        {/* <RevenueChart /> */}
 
         {/* Check-in Status Pie Chart */}
-        <Card>
+        {/* <Card>
           <CardHeader>
             <CardTitle>Check-in Status</CardTitle>
           </CardHeader>
@@ -89,17 +89,17 @@ export default function Dashboard() {
               </ResponsiveContainer>
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
 
       {/* Category Performance and Recent Activity */}
       <div className="grid gap-6 lg:grid-cols-2">
-        <CategoryPerformance />
-        <RecentActivity />
+        {/* <CategoryPerformance /> */}
+        {/* <RecentActivity /> */}
       </div>
 
       {/* Bookings by Category Bar Chart */}
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Bookings by Category</CardTitle>
         </CardHeader>
@@ -123,7 +123,7 @@ export default function Dashboard() {
             </ResponsiveContainer>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   )
 }

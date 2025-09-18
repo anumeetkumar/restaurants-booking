@@ -33,3 +33,10 @@ export interface DashboardStats {
   todayBookings: number
   bookingsByCategory: { categoryName: string; count: number }[]
 }
+
+export interface Organization{
+  id : string
+  name : string
+  email : string
+  phone : string
+}

@@ -17,7 +17,7 @@ const navigation = [
   // { name: "Settings", href: "/settings", icon: Settings },
 ]
 
-export function Navbar() {
+export function   Navbar() {
   const pathname = usePathname()
   const { settings } = useSettingsStore()
 

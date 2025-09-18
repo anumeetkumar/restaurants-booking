@@ -36,10 +36,10 @@ interface SettingsStore {
 interface OrganizationStore {
   organization: Organization[];
   addOrganization: (
-    organization: Omit<Organization, "id" | "name" | "email" | "phone">
+    organization: Omit<Organization, "id">
   ) => void;
-  updateOrganization: () => void;
-  deleteOrganization: () => void;
+  updateOrganization: (id: string, data: Partial<Organization>) => void;
+  deleteOrganization: (id: string) => void;
 }
 
 export const useCategoryStore = create<CategoryStore>()(
@@ -150,24 +150,25 @@ export const organizationStore = create<OrganizationStore>()(
     (set, get) => ({
       organization: [],
       addOrganization: (organization) => {
+        const newOrganization: Organization = {
+          ...organization,
+          id: crypto.randomUUID(),
+        };
         set((state) => ({
-          organization: [...state.organization, organization],
+          organization: [...state.organization, newOrganization],
         }));
-
-        console.log("organization added", organization);
       },
-      updateOrganization: (id: number, data: Organization) => {
-        console.log("update function working")
-        set((state) => {
-          const updated = [...state.organization]; // clone array
-          const index = updated.findIndex((org) => org.id === id);
-          if (index !== -1) {
-            updated.splice(index, 1, { ...updated[index], ...data });
-          }
-        });
+      updateOrganization: (id: string, data: Partial<Organization>) => {
+        set((state) => ({
+          organization: state.organization.map((org) =>
+            org.id === id ? { ...org, ...data } : org
+          ),
+        }));
       },
-      deleteOrganization: () => {
-        // logic here
+      deleteOrganization: (id: string) => {
+        set((state) => ({
+          organization: state.organization.filter((org) => org.id !== id),
+        }));
       },
     }),
     {
